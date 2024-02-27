@@ -1,0 +1,21 @@
+steps:
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - build
+      - '-t'
+      - 'gcr.io/{project-id}/cuterepo:latest'
+      - .
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - push
+      - gcr.io/{project-id}/cuterepo
+  - name: gcr.io/cloud-builders/gcloud
+    args:
+      - '-c'
+      - >
+        gcloud deploy releases create release-$(date +%Y%M%d)
+        --delivery-pipeline=pipe --region us-central1 --skaffold-file
+        skaffold.yaml
+    entrypoint: bash
+options:
+  logging: CLOUD_LOGGING_ONLY

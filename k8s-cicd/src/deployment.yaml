@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pipe-target-1
+  labels:
+    app: pipe-target-1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pipe-target-1
+  template:
+    metadata:
+      labels:
+        app: pipe-target-1
+    spec:
+      containers:
+      - name: pipe-target-1
+        image: gcr.io/{project-id}/cuterepo:latest
+        ports:
+          - containerPort: 80
