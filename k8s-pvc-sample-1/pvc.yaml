@@ -1,0 +1,47 @@
+# You can use "kubectl exec {pod_name} -it -- bash" to create new file in the volume
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 30Gi
+  storageClassName: standard-rwo
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: deployment-1
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: deployment-1
+  template:
+    metadata:
+      labels:
+        app: deployment-1
+    spec:
+      volumes:
+        - name: vol
+          persistentVolumeClaim:
+            claimName: pvc
+      containers:
+        - name: deployment-1
+          image: nginx
+          resources:
+            limits:
+              cpu: 10m
+              memory: 80Mi
+            requests:
+              cpu: 10m
+              memory: 80Mi
+          ports:
+            - containerPort: 80
+              name: "http-server"
+          volumeMounts:
+            - mountPath: "/usr/share/nginx/html"
+              name: vol
