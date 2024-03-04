@@ -1,0 +1,9 @@
+<body>
+    <img src="{{url_for('static', filename='cat1.jpg')}}"></img>
+    <img src="{{url_for('static', filename='cat2.jpg')}}"></img>
+    <img src="{{url_for('static', filename='notcat.jpg')}}"></img>
+
+    <form action="/contact" method="post">
+        <input type="text" id="email" name="email"><br>
+        <input type="submit" value="Login">
+</body>
