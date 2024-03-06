@@ -1,0 +1,10 @@
+runtime: python312
+
+handlers:
+  - url: /.*
+    secure: always
+    script: auto
+
+vpc_access_connector:
+  name: connector
+  egress_setting: private-ranges-only
