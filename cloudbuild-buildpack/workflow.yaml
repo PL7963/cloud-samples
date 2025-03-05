@@ -1,0 +1,9 @@
+main:
+    params: [input]
+    steps:
+        - run_job:
+            call: googleapis.run.v1.namespaces.jobs.run
+            args:
+                name: 'namespaces/{project-id}/jobs/{job-id}'
+                location: us-central1
+            result: job_execution
