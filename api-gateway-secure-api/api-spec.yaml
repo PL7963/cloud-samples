@@ -1,0 +1,49 @@
+swagger: "2.0"
+info:
+  title: "Meow API"
+  description: "meow"
+  version: 1.0.0
+schemes:
+  - http
+securityDefinitions:
+  api_key:
+    type: "apiKey"
+    name: "key"
+    in: "query"
+x-google-management:
+  metrics:
+    - name: "metric"
+      displayName: "metric"
+      valueType: INT64
+      metricKind: DELTA
+  quota:
+    limits:
+      - name: "limit"
+        metric: "metric"
+        unit: 1/min/{project}
+        values:
+          STANDARD: 5
+paths:
+  /meow:
+    get:
+      summary: "meow"
+      operationId: "meow"
+      x-google-backend:
+        address: "{Cloud-Run-URL}"
+      responses:
+        200:
+          description: "meow"
+  /secured-be:
+    get:
+      summary: "secured-be"
+      operationId: "secured-be"
+      x-google-backend:
+        address: "{another-Cloud-Run-URL}"
+      security:
+        - api_key: []
+      responses:
+        200:
+          description: "meow"
+      x-google-quota:
+        metricCosts:
+          "metric": 1
